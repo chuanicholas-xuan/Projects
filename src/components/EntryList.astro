@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { url } from '../utils';
+
+type Entry = CollectionEntry<'blog' | 'notes' | 'projects'>;
+
+interface Props {
+	entries: Entry[];
+	section: string; // URL folder, e.g. 'blog'
+}
+
+const { entries, section } = Astro.props;
+const sorted = [...entries].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+{sorted.length === 0 && <p class="empty">Nothing here yet.</p>}
+<ul>
+	{
+		sorted.map((entry) => (
+			<li>
+				<a href={url(`/${section}/${entry.id}/`)}>
+					<h3>{entry.data.title}</h3>
+				</a>
+				<p class="meta">
+					<FormattedDate date={entry.data.pubDate} />
+					{entry.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+				</p>
+				<p>{entry.data.description}</p>
+			</li>
+		))
+	}
+</ul>
+<style>
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+	li {
+		margin-bottom: 2em;
+	}
+	h3 {
+		margin: 0;
+	}
+	li a {
+		text-decoration: none;
+	}
+	.meta {
+		margin: 0.25em 0;
+		color: rgb(var(--gray));
+		font-size: 0.9em;
+	}
+	.tag {
+		margin-left: 0.75em;
+	}
+	.empty {
+		color: rgb(var(--gray));
+	}
+</style>

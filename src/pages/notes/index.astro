@@ -1,0 +1,12 @@
+---
+import { getCollection } from 'astro:content';
+import EntryList from '../../components/EntryList.astro';
+import Page from '../../layouts/Page.astro';
+
+const entries = await getCollection('notes');
+---
+
+<Page title="Notes">
+	<h1>Notes</h1>
+	<EntryList entries={entries} section="notes" />
+</Page>

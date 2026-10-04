@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import EntryList from '../components/EntryList.astro';
+import Page from '../layouts/Page.astro';
+import { url } from '../utils';
+
+const latest = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+---
+
+<Page>
+	<h1>Hi, I'm Nicholas 👋</h1>
+	<p>
+		This is where I keep my <a href={url('/blog')}>blog posts</a>, <a href={url('/notes')}>notes</a> and{' '}
+		<a href={url('/projects')}>projects</a>, mostly about learning machine learning and building things.
+	</p>
+	<h2>Latest posts</h2>
+	<EntryList entries={latest} section="blog" />
+</Page>
