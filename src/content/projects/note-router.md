@@ -1,7 +1,7 @@
 ---
 title: 'Note Router'
 description: 'A local-first tool that learns to sort my notes, built to learn ML training.'
-pubDate: '2026-10-04'
+pubDatetime: 2026-10-04T09:00:00+08:00
 tags: ['ml', 'python']
 repo: 'https://github.com/chuanicholas-xuan'
 ---

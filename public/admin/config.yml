@@ -23,14 +23,16 @@ collections:
     slug: '{{slug}}'
     media_folder: ../../assets/images
     public_folder: ../../assets/images
-    summary: '{{title}} · {{pubDate}}'
-    sortable_fields: [pubDate, title]
+    summary: '{{title}}'
+    sortable_fields: [pubDatetime, title]
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Summary, name: description, widget: string, hint: One line shown in lists. }
-      - { label: Date, name: pubDate, widget: datetime, time_format: false, date_format: YYYY-MM-DD, format: YYYY-MM-DD }
+      - { label: Summary, name: description, widget: string, hint: One line shown in lists and search results. }
+      - { label: Published, name: pubDatetime, widget: datetime }
+      - { label: Last updated, name: modDatetime, widget: datetime, required: false }
       - { label: Tags, name: tags, widget: list, required: false, default: [] }
-      - { label: Cover image, name: heroImage, widget: image, required: false }
+      - { label: Featured on home page, name: featured, widget: boolean, required: false, default: false }
+      - { label: Draft (hide from site), name: draft, widget: boolean, required: false, default: false }
       - { label: Body, name: body, widget: markdown }
 
   - name: notes
@@ -42,14 +44,16 @@ collections:
     slug: '{{slug}}'
     media_folder: ../../assets/images
     public_folder: ../../assets/images
-    summary: '{{title}} · {{pubDate}}'
-    sortable_fields: [pubDate, title]
+    summary: '{{title}}'
+    sortable_fields: [pubDatetime, title]
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Summary, name: description, widget: string, hint: One line shown in lists. }
-      - { label: Date, name: pubDate, widget: datetime, time_format: false, date_format: YYYY-MM-DD, format: YYYY-MM-DD }
+      - { label: Summary, name: description, widget: string, hint: One line shown in lists and search results. }
+      - { label: Published, name: pubDatetime, widget: datetime }
+      - { label: Last updated, name: modDatetime, widget: datetime, required: false }
       - { label: Tags, name: tags, widget: list, required: false, default: [] }
-      - { label: Cover image, name: heroImage, widget: image, required: false }
+      - { label: Featured on home page, name: featured, widget: boolean, required: false, default: false }
+      - { label: Draft (hide from site), name: draft, widget: boolean, required: false, default: false }
       - { label: Body, name: body, widget: markdown }
 
   - name: projects
@@ -61,14 +65,16 @@ collections:
     slug: '{{slug}}'
     media_folder: ../../assets/images
     public_folder: ../../assets/images
-    summary: '{{title}} · {{pubDate}}'
-    sortable_fields: [pubDate, title]
+    summary: '{{title}}'
+    sortable_fields: [pubDatetime, title]
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Summary, name: description, widget: string, hint: One line shown in lists. }
-      - { label: Date, name: pubDate, widget: datetime, time_format: false, date_format: YYYY-MM-DD, format: YYYY-MM-DD }
+      - { label: Summary, name: description, widget: string, hint: One line shown in lists and search results. }
+      - { label: Published, name: pubDatetime, widget: datetime }
+      - { label: Last updated, name: modDatetime, widget: datetime, required: false }
       - { label: Tags, name: tags, widget: list, required: false, default: [] }
-      - { label: Cover image, name: heroImage, widget: image, required: false }
+      - { label: Featured on home page, name: featured, widget: boolean, required: false, default: false }
+      - { label: Draft (hide from site), name: draft, widget: boolean, required: false, default: false }
       - { label: Code (GitHub link), name: repo, widget: string, required: false }
       - { label: Live demo link, name: demo, widget: string, required: false }
       - { label: Body, name: body, widget: markdown }
@@ -84,5 +90,5 @@ collections:
         file: src/content/pages/about.md
         fields:
           - { label: Title, name: title, widget: string }
-          - { label: Summary, name: description, widget: string }
+          - { label: Summary, name: description, widget: string, required: false }
           - { label: Body, name: body, widget: markdown }

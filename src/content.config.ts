@@ -1,38 +1,43 @@
-import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
-import { z } from 'astro/zod';
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
+import config from "@/config";
 
-// Shared frontmatter for every page: title, description, date and tags.
-const base = ({ image }: { image: () => z.ZodType }) =>
-	z.object({
-		title: z.string(),
-		description: z.string(),
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
-		tags: z.array(z.string()).default([]),
-		heroImage: z.optional(image()),
-	});
+// Blog posts, notes and projects all live under src/content/<section>/
+// and share the post pages, tags, search and RSS.
+export const BLOG_PATH = "src/content";
+export const SECTIONS = ["blog", "notes", "projects"] as const;
 
-const collection = (dir: string) =>
-	glob({ base: `./src/content/${dir}`, pattern: '**/*.{md,mdx}' });
-
-const blog = defineCollection({ loader: collection('blog'), schema: base });
-
-const notes = defineCollection({ loader: collection('notes'), schema: base });
-
-const projects = defineCollection({
-	loader: collection('projects'),
-	schema: (ctx) =>
-		base(ctx).extend({
-			repo: z.string().url().optional(), // link to the project's code
-			demo: z.string().url().optional(), // link to a live demo
-		}),
+const posts = defineCollection({
+  loader: glob({ pattern: `{${SECTIONS.join(",")}}/**/[^_]*.{md,mdx}`,
+    base: `./${BLOG_PATH}`, }),
+  schema: ({ image }) =>
+    z.object({
+      author: z.string().default(config.site.author),
+      pubDatetime: z.coerce.date(),
+      modDatetime: z.coerce.date().optional().nullable(),
+      title: z.string(),
+      featured: z.boolean().optional(),
+      draft: z.boolean().optional(),
+      tags: z.array(z.string()).default(["others"]),
+      ogImage: image().or(z.string()).optional(),
+      description: z.string(),
+      canonicalURL: z.string().optional(),
+      hideEditPost: z.boolean().optional(),
+      timezone: z.string().optional(),
+      repo: z.string().optional(), // projects: link to the code
+      demo: z.string().optional(), // projects: link to a live demo
+    }),
 });
 
-// Standalone pages (e.g. About) editable from the dashboard.
 const pages = defineCollection({
-	loader: collection('pages'),
-	schema: z.object({ title: z.string(), description: z.string() }),
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/pages" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    ogImage: z.string().optional(),
+    canonicalURL: z.string().optional(),
+  }),
 });
 
-export const collections = { blog, notes, projects, pages };
+export const collections = { posts, pages };
