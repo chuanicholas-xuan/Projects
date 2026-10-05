@@ -1,0 +1,88 @@
+# Settings for the /admin dashboard (Sveltia CMS).
+# Each collection below is a section in the dashboard sidebar.
+
+backend:
+  name: github
+  repo: chuanicholas-xuan/Projects
+  branch: main
+
+site_url: https://chuanicholas-xuan.github.io/Projects
+display_url: https://chuanicholas-xuan.github.io/Projects
+
+# Uploaded images go to src/assets/images so Astro can optimize them.
+media_folder: src/assets/images
+public_folder: /src/assets/images
+
+collections:
+  - name: blog
+    label: Blog
+    label_singular: Post
+    icon: edit_note
+    folder: src/content/blog
+    create: true
+    slug: '{{slug}}'
+    media_folder: ../../assets/images
+    public_folder: ../../assets/images
+    summary: '{{title}} · {{pubDate}}'
+    sortable_fields: [pubDate, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: description, widget: string, hint: One line shown in lists. }
+      - { label: Date, name: pubDate, widget: datetime, time_format: false, date_format: YYYY-MM-DD, format: YYYY-MM-DD }
+      - { label: Tags, name: tags, widget: list, required: false, default: [] }
+      - { label: Cover image, name: heroImage, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: notes
+    label: Notes
+    label_singular: Note
+    icon: sticky_note_2
+    folder: src/content/notes
+    create: true
+    slug: '{{slug}}'
+    media_folder: ../../assets/images
+    public_folder: ../../assets/images
+    summary: '{{title}} · {{pubDate}}'
+    sortable_fields: [pubDate, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: description, widget: string, hint: One line shown in lists. }
+      - { label: Date, name: pubDate, widget: datetime, time_format: false, date_format: YYYY-MM-DD, format: YYYY-MM-DD }
+      - { label: Tags, name: tags, widget: list, required: false, default: [] }
+      - { label: Cover image, name: heroImage, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: projects
+    label: Projects
+    label_singular: Project
+    icon: rocket_launch
+    folder: src/content/projects
+    create: true
+    slug: '{{slug}}'
+    media_folder: ../../assets/images
+    public_folder: ../../assets/images
+    summary: '{{title}} · {{pubDate}}'
+    sortable_fields: [pubDate, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: description, widget: string, hint: One line shown in lists. }
+      - { label: Date, name: pubDate, widget: datetime, time_format: false, date_format: YYYY-MM-DD, format: YYYY-MM-DD }
+      - { label: Tags, name: tags, widget: list, required: false, default: [] }
+      - { label: Cover image, name: heroImage, widget: image, required: false }
+      - { label: Code (GitHub link), name: repo, widget: string, required: false }
+      - { label: Live demo link, name: demo, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: pages
+    label: Pages
+    icon: description
+    media_folder: ../../assets/images
+    public_folder: ../../assets/images
+    files:
+      - name: about
+        label: About page
+        file: src/content/pages/about.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Summary, name: description, widget: string }
+          - { label: Body, name: body, widget: markdown }

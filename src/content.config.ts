@@ -29,4 +29,10 @@ const projects = defineCollection({
 		}),
 });
 
-export const collections = { blog, notes, projects };
+// Standalone pages (e.g. About) editable from the dashboard.
+const pages = defineCollection({
+	loader: collection('pages'),
+	schema: z.object({ title: z.string(), description: z.string() }),
+});
+
+export const collections = { blog, notes, projects, pages };
